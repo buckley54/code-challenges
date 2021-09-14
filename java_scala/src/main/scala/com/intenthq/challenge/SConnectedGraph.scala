@@ -14,6 +14,9 @@ object SConnectedGraph {
   // run(a, b) == true
   // run(a, c) == true
   // run(b, d) == false
-  def run(source: Node, target: Node): Boolean = ???
+  def run(source: Node, target: Node): Boolean = {
+    if(source == target) return true
+    source.edges.foldLeft(false) { (found, node) => if(found || source == node) true else run(node, target) }
+  }
 
 }

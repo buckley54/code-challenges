@@ -21,5 +21,15 @@ object SNiceStrings {
 //    dvszwmarrgswjxmb is naughty because it contains only one vowel.
 //    How many strings are nice?
 
-  def nice(xs: List[String]): Int = ???
+  def nice(xs: List[String]): Int = {
+    def containsNoUndesirables(s: String): Boolean = !(s.contains("ab") || s.contains("cd") || s.contains("pq") || s.contains("xy"))
+    def contains3Vowels(s: String): Boolean = s.count(s => s == 'a' || s == 'e' || s == 'i' || s == 'o' || s == 'u') >= 3
+    def containsDoubled(s: String): Boolean = s.foldLeft(false -> ' ') {
+      case (r@(f, _), _) if f => r
+      case ((_, l), c) if l == c => true -> ' '
+      case (_, c) => false -> c
+    }._1
+
+    xs.count(s => containsNoUndesirables(s) && contains3Vowels(s) && containsDoubled(s))
+  }
 }
